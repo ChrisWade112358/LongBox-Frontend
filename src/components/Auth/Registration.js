@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {addUser, editUser } from '../actions/users';
-import './UserForm.css'
+import axios from 'axios'
+import { addUser } from '../../actions/users';
+import './Registration.css'
 
 
 const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -24,7 +25,8 @@ const formValid = ({formErrors, ...rest}) => {
 }
 
 class UserForm extends Component {
-    state = {      
+    state = {
+        
         firstName: '',
         lastName: '',
         address: '',
@@ -110,7 +112,7 @@ class UserForm extends Component {
     handleOnSubmit = event => {
         event.preventDefault();
         const user = {
-            firstname: this.state.firstName,
+            firstname: this. state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
             address: this.state.address,
@@ -120,13 +122,8 @@ class UserForm extends Component {
             password: this.state.password
         }
         if(formValid(this.state)){
-            if(this.state){ //**WATCH OUT CHANG TO CURRENT USER */
-                this.props.addUser(user);
-            }
-            else {
-                this.props.editUser(user)
-            }
             
+            addUser(user);
         }
         else{
             console.error('FORM INVALID - DISPLAY ERROR MESSAGE');
@@ -296,7 +293,7 @@ class UserForm extends Component {
                                 id="verify-password-input" 
                                 type="password" 
                                 name="confirmPassword" 
-                                value={this.state.verifyPassword} 
+                                value={this.state.confirmPassword} 
                                 onChange={this.handleChange} 
                                 placeholder="Confirm Password" 
                                 formNoValidate />
@@ -322,12 +319,11 @@ class UserForm extends Component {
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addUser: () => {dispatch(addUser())},
-        editUser: () => {dispatch(editUser())}
+const mapStateToProps = state => {
+    return{
+        loading: state.loading
     }
 }
 
 
-export default connect(null, mapDispatchToProps)(UserForm)
+export default connect(mapStateToProps)(UserForm)

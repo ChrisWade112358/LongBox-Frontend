@@ -19,11 +19,12 @@ let manageUsers = (state = [], action) => {
         case 'LOGIN_USER':
             index = state.findIndex(user => user.email === action.user.email);
             if(index !== null){
-                user = stae[index];
+                user = state[index];
                 if(user.password === action.user.password){
                     return 
                 }
             }
+            break
         default:
             return state;    
     }

@@ -1,4 +1,7 @@
 import { combineReducers } from 'redux';
 import users from './users'
+import manageLoading from './manageLoading'
 
-export default combineReducers({users,});
+const rootReducer = combineReducers({users, manageLoading});
+
+export default rootReducer;
